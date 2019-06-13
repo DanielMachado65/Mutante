@@ -6,9 +6,7 @@ class MutantesController < ApplicationController
   end
 
   # GET mutantes/1
-  def show
-    render json: @mutant
-  end
+  def show; end
 
   def create
     @mutant = Mutante.new(mutante_params)
