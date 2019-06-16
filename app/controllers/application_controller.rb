@@ -8,7 +8,7 @@ class ApplicationController < ActionController::API
   def login_user
     return api_unauthorized('request not found params') unless login_params
 
-    @mutant = Mutante.login(params[:login], params[:password])
+    @user = User.login(params[:login], params[:password])
   end
 
   def login_params

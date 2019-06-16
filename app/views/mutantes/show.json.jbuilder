@@ -1,1 +1,1 @@
-json.extract! @mutant, :name, :login, :hability, :picture
+json.extract! @mutant, :name, :hability, :picture

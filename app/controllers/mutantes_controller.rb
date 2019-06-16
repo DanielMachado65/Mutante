@@ -1,19 +1,16 @@
 class MutantesController < ApplicationController
-  before_action :login, except: %i[create]
+  before_action :login
+  before_action :set_mutant, only: %i[show destroy update]
 
   def index
-    render json: {msg: 'welcome message'}
+    render json: @user.mutantes.as_json
   end
 
-  # GET mutantes/1
   def show; end
 
   def create
     @mutant = Mutante.new(mutante_params)
-    if @mutant.login.nil? || @mutant.password.nil?
-      return api_bad_request('login and password required')
-    end
-
+    @user.mutantes << @mutant
     if @mutant.save
       render json: @mutant, status: :created, location: @mutant
     else
@@ -22,7 +19,10 @@ class MutantesController < ApplicationController
   end
 
   def update
-    if @mutant.update(mutante_params)
+    if @mutant.update(name: params[:name],
+                      hability: params[:hability],
+                      picture: params[:picture],
+                      user: @user)
       render json: @mutant
     else
       render json: @mutant.errors, status: :unprocessable_entity
@@ -36,9 +36,13 @@ class MutantesController < ApplicationController
 
   private
 
+  def set_mutant
+    @mutant = Mutante.where(id: params[:id]).first
+    render json: {error: 'not found mutant'}.to_json if @mutant.nil?
+  end
+
   def mutante_params
     params.require(:mutante).permit(:name,
-                                    :password,
-                                    :hability, :login, :picture)
+                                    :hability, :picture)
   end
 end
