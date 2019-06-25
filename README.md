@@ -22,3 +22,8 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+
+### How to install Rails on Windows
+
+* [Link for install](https://gorails.com/setup/windows/10)
